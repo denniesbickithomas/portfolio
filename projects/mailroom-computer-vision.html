@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mailroom Wait Times | Dennies Bicki Thomas</title>
+  <meta name="description" content="A product concept and prototype that uses YOLOv8 computer vision to estimate live mailroom wait times for 300+ ASU residents.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#work">← All projects</a>
+      <span class="eyebrow">Product concept · Computer vision · CIS 515</span>
+      <h1>Know the mailroom line before you walk over</h1>
+      <p class="lede">At ASU's Hassayampa Academic Village, mailroom waits range from 0 to more than 30 minutes, and residents have to walk over just to find out. Our team designed a resident app that uses live camera footage to show how many people are in line and the estimated wait, without ever showing anyone the video.</p>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Fall 2025</dd></div>
+        <div><dt>Team</dt><dd>5 MSBA students (Team 13)</dd></div>
+        <div><dt>Users</dt><dd>300+ first-year residents</dd></div>
+        <div><dt>Tech</dt><dd>Python · YOLOv8n · OpenCV · Colab</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#solution">The solution</a>
+      <a href="#how">How it works</a>
+      <a href="#validation">Validation</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#role">My role</a>
+    </nav>
+
+    <article class="prose">
+      <h2 id="solution">The solution</h2>
+      <p>Some students spend more than an hour walking to the mailroom and waiting. The app answers one question, "is it worth going now?", and adds what residents need once they decide to go:</p>
+      <ul>
+        <li>Live <strong>queue length and estimated wait</strong></li>
+        <li>Mailroom hours and package details</li>
+        <li>A way to message mailroom staff</li>
+        <li><strong>Privacy by design:</strong> users see counts and estimates, never video</li>
+      </ul>
+      <figure>
+        <img src="../assets/img/projects/mailroom_cv_03_app_ui_mockup.png" alt="Mockup of the resident app showing queue length and estimated wait" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>App concept</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/img/projects/mailroom_cv_06_ui_example.png" alt="Example app screen" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="how">How it works</h2>
+      <ol>
+        <li>YOLOv8 detects people in each video frame.</li>
+        <li>Only people whose feet fall inside a <strong>polygon drawn around the queue area</strong> are counted, so passers-by are ignored.</li>
+        <li>Estimated wait = (people in queue + 1) × 2-minute average service time ÷ 2 servers. These queuing assumptions came from mailroom staff.</li>
+        <li>The prototype outputs an annotated video with queue length and wait time on every frame.</li>
+      </ol>
+      <figure>
+        <img src="../assets/img/projects/mailroom_cv_02_yolo_queue_detection.png" alt="Video frame with YOLO detections inside the queue polygon and an estimated wait overlay" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>Prototype detection frame</figcaption>
+      </figure>
+
+      <h2 id="validation">Validation</h2>
+      <div class="callout">
+        <strong>Small proof-of-concept sample</strong>
+        <p>The prototype counted the queue correctly in 7 of 7 sample frames (mean absolute error of 0). That's promising but small, and the plan is to validate again with a month of real data once cameras are installed.</p>
+      </div>
+      <figure>
+        <img src="../assets/img/projects/mailroom_cv_05_validation_mae0.png" alt="Validation table comparing predicted and actual counts" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="roadmap">Roadmap</h2>
+      <p>MVP (Jan–Feb 2026) → one month of queue data to refine and validate → beta testing → fall 2026 launch, then expansion to dining halls and other mailrooms. A later version would forecast waits with a regression model on time of day, day of week and season.</p>
+      <figure>
+        <img src="../assets/img/projects/mailroom_cv_04_rollout_timeline.png" alt="Rollout timeline from MVP to launch" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="role">My role</h2>
+      <div class="role">
+        <ul>
+          <li>Owned and presented <strong>"The Solution"</strong>: the app concept, the feature set and the resident use cases.</li>
+          <li>Teammates built most of the computer-vision model and code.</li>
+        </ul>
+      </div>
+      <p class="team">Team 13: Tej Mistry, Anu Sri Valli Chinthapalli, Sophie Weinzinger, Dennies Bicki Thomas, Rishab Ravikumar.</p>
+
+      <div class="next-case">
+        <a href="bank-churn.html">← Bank churn prediction</a>
+        <a href="greenfleet-decisions.html">Next: Decisions under uncertainty →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>

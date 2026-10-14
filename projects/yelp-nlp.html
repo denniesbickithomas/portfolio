@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yelp Review Analytics | Dennies Bicki Thomas</title>
+  <meta name="description" content="Can review text predict restaurant closures? Sentiment and TF-IDF modeling on 72,124 Yelp restaurant reviews, and what it means for managers.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#work">← All projects</a>
+      <span class="eyebrow">NLP · Text analytics · CIS 509</span>
+      <h1>Can Yelp reviews predict restaurant success?</h1>
+      <p class="lede">We asked whether the words customers write can tell us which restaurants will close. The answer was mostly "no," and explaining why turned out to be the useful finding for managers.</p>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Fall 2025</dd></div>
+        <div><dt>Team</dt><dd>5 MSBA students (Group 1)</dd></div>
+        <div><dt>Data</dt><dd>Yelp Open Dataset · 72,124 restaurant reviews</dd></div>
+        <div><dt>Tools</dt><dd>Python · VADER · scikit-learn · seaborn</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#approach">Approach</a>
+      <a href="#results">Results</a>
+      <a href="#insight">The real insight</a>
+      <a href="#role">My role</a>
+    </nav>
+
+    <article class="prose">
+      <h2 id="approach">Approach</h2>
+      <p>We merged 100,000 reviews with 9,973 businesses (average 3.58 stars, about 26% closed), filtered to restaurants, then:</p>
+      <ol>
+        <li>Scored the sentiment of every review with VADER.</li>
+        <li>Converted the text into 52,913 TF-IDF word features.</li>
+        <li>Trained a logistic regression to predict open vs. closed, using an 80/20 train-test split.</li>
+      </ol>
+      <figure>
+        <img src="../assets/img/projects/yelp_01_sentiment_distribution.png" alt="Histogram of review sentiment, heavily skewed positive" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>Most reviews score close to +1.0. Yelp text is overwhelmingly positive.</figcaption>
+      </figure>
+
+      <h2 id="results">Results</h2>
+      <ul>
+        <li>Accuracy: <strong>74.65%</strong>, with 98% recall for open restaurants but <strong>only 12% for closed ones</strong>.</li>
+        <li>Words tied to staying open: <em>amazing, delicious, perfect, friendly, recommend</em>.</li>
+        <li>Words tied to closing: <em>disappointed, rude, dirty, manager, overpriced, bland</em>.</li>
+      </ul>
+      <figure>
+        <img src="../assets/img/projects/yelp_02_model_performance.png" alt="Model performance by class" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+      <figure>
+        <img src="../assets/img/projects/yelp_03_words_model_learned.png" alt="Top words associated with open and closed restaurants" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="insight">The real insight</h2>
+      <div class="callout warm">
+        <strong>74.65% sounds good until you see the baseline.</strong>
+        <p>About 73% of the test set was "open," so a model that always says "open" would score about 73%. Review text on its own is a <strong>weak predictor of closure</strong>. The value of the project was the diagnosis: class imbalance hides the cases that matter, and closure probably shows up in trends rather than in individual reviews.</p>
+      </div>
+      <p>Next steps we proposed: SMOTE resampling, plus features for star-rating trends, review-volume trends and business attributes.</p>
+
+      <h2 id="role">My role</h2>
+      <div class="role">
+        <ul>
+          <li>Owned the <strong>Managerial Insights &amp; Implications</strong> section, translating model output into guidance for restaurant managers:
+            <ul>
+              <li>Text alone isn't enough.</li>
+              <li>Class imbalance skews the results.</li>
+              <li>Watch the trends, not just the words: a falling rating or shrinking review volume is the real warning sign.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <p class="team">Group 1: Tej Mistry, Sophie Weinzinger, Anu Sri Valli Chinthapalli, Dennies Bicki Thomas, Rishab Ravikumar.</p>
+
+      <div class="next-case">
+        <a href="greenfleet-decisions.html">← Decisions under uncertainty</a>
+        <a href="basecamp-dashboard.html">Back to: Basecamp dashboard →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>

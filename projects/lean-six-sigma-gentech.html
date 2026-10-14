@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proposal Cycle Time | Dennies Bicki Thomas</title>
+  <meta name="description" content="Lean Six Sigma case: mapping a 19-step ERP sales-proposal process, baselining it at sigma 2.02, and designing fixes projected to cut cycle time from ~32 to 24–26 days.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#work">← All projects</a>
+      <span class="eyebrow">Lean Six Sigma · DMAIC case · SCM 517</span>
+      <h1>Cutting sales-proposal cycle time</h1>
+      <p class="lede">Proposals at "Gentech" took so long that they piled up and sales were lost. We analyzed 250,000 records of the 9-step ERP proposal process, found the two steps that cause most of the delay, and designed fixes plus a control plan to keep the gains.</p>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Mar 17 – Apr 12, 2025</dd></div>
+        <div><dt>Team</dt><dd>4 MSBA students</dd></div>
+        <div><dt>Data</dt><dd>250,000 process instances (case dataset)</dd></div>
+        <div><dt>Tools</dt><dd>Excel · Minitab · Python · LSS toolkit</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#define">Define</a>
+      <a href="#measure">Measure</a>
+      <a href="#analyze">Analyze</a>
+      <a href="#improve">Improve &amp; control</a>
+      <a href="#role">My role</a>
+    </nav>
+
+    <article class="prose">
+      <div class="results">
+        <div class="stat"><div class="num">~32 days</div><div class="label">baseline average cycle time (31.86)</div></div>
+        <div class="stat"><div class="num">2.02σ</div><div class="label">sigma level; 21,672 DPMO against a 55-day SLA</div></div>
+        <div class="stat"><div class="num">~70%</div><div class="label">of cycle time spent in just 2 of the steps</div></div>
+        <div class="stat"><div class="num">24–26 days</div><div class="label">projected cycle time after the improvements</div></div>
+      </div>
+
+      <h2 id="define">Define</h2>
+      <p>The project charter set the goal: <strong>cut proposal cycle time by 25–30%.</strong> We mapped the current process as a swim-lane diagram with <strong>7 lanes and 19 steps</strong>, covering Seller, Bid Support, Proposal Support Manager, Product Design, Selling Team, Brand Manager and Client. The map showed <strong>5 revision loops that add no value</strong>.</p>
+      <figure>
+        <img src="../assets/img/projects/gentech_06_swimlane_full_res.png" alt="Swim-lane map of the 19-step proposal process across 7 roles" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>Current-state swim-lane map</figcaption>
+      </figure>
+
+      <h2 id="measure">Measure</h2>
+      <p>Average total cycle time was about 32 days. Against a 55-day service-level agreement there were 5,418 defects in 250,000 proposals, which gives <strong>21,672 defects per million opportunities, a sigma level of 2.02</strong>.</p>
+      <figure>
+        <img src="../assets/img/projects/gentech_02_baseline_sigma_metrics.png" alt="Baseline cycle time, DPMO and sigma level" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="analyze">Analyze</h2>
+      <ul>
+        <li><strong>Segmentation:</strong> geography drives the variation, not brand. North America was consistently the slowest region.</li>
+        <li><strong>Bottlenecks:</strong> two steps, configuration review and pricing/brand approval, take <strong>about 70% of total cycle time</strong>.</li>
+        <li><strong>Complexity:</strong> bid complexity and cycle time are 83.6% correlated, and the relationship is logarithmic.</li>
+        <li><strong>Root causes:</strong> we broke the process into eight time deltas and sorted the causes into a fishbone diagram under People, Process, Technology and Information. Causes included routing errors, manual re-entry, ERP lag, missing seller information, and every bid going through the brand manager.</li>
+        <li><strong>Stability:</strong> X-bar and R control charts show the process is <em>out of control</em>. In the FMEA, the highest risk priority number (210) was for the range exceeding the upper control limit.</li>
+      </ul>
+      <figure>
+        <img src="../assets/img/projects/gentech_03_complexity_vs_cycle_time.png" alt="Scatter of bid complexity against cycle time showing a logarithmic relationship" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+      <figure>
+        <img src="../assets/img/projects/gentech_04_xbar_r_control_chart.png" alt="X-bar and R control charts showing an out-of-control process" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="improve">Improve &amp; control</h2>
+      <ul>
+        <li>Standard templates for the configuration-review step.</li>
+        <li>Dedicated review and approval cells, so not every bid waits for the brand manager.</li>
+        <li>SLA enforcement in North America, one shared communication platform, and cross-training.</li>
+        <li>A <strong>control plan</strong> with monthly control charts, automated alerts, named step owners and a regular audit schedule.</li>
+      </ul>
+      <div class="callout">
+        <strong>Projected impact (not measured)</strong>
+        <p>A roughly 30% efficiency gain on the two bottleneck steps saves about 6–7 days, bringing the forecast cycle time to <strong>24–26 days, down from about 32</strong>. That's a 19–25% reduction, close to the charter's 25–30% goal.</p>
+      </div>
+      <figure>
+        <img src="../assets/img/projects/gentech_05_before_after_improvement.png" alt="Before and after projected cycle time" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="role">My role</h2>
+      <div class="role">
+        <ul>
+          <li>Named team member on the project charter, working across the full DMAIC analysis with three teammates.</li>
+          <!-- TODO (Dennies): name the analysis you led, e.g. process map, sigma baseline, SPC charts, FMEA, the report. -->
+        </ul>
+      </div>
+      <p class="team">Team "Gold 2": Sophie Weinzinger, Tej Mistry, Dennies Bicki Thomas, Anu Sri Valli Chinthapalli.</p>
+
+      <div class="next-case">
+        <a href="basecamp-dashboard.html">← Basecamp dashboard</a>
+        <a href="bank-churn.html">Next: Bank churn prediction →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>

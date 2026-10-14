@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bank Churn Prediction | Dennies Bicki Thomas</title>
+  <meta name="description" content="Predicting bank customer churn on 10,000 customers: catching target leakage, screening ~30 models, and a tuned Random Forest at 85.3% accuracy and 0.82 AUC.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#work">← All projects</a>
+      <span class="eyebrow">Machine learning · CIS 508</span>
+      <h1>Predicting bank customer churn</h1>
+      <p class="lede">Can we predict which customers will leave a bank, and what drives them out? On 10,000 customers our first model looked perfect. Working out why it looked perfect turned out to be the most valuable part of the project.</p>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Spring 2025</dd></div>
+        <div><dt>Team</dt><dd>4 MSBA students</dd></div>
+        <div><dt>Data</dt><dd>Kaggle Bank Customer Churn · 10,000 rows · ~20% churn</dd></div>
+        <div><dt>Tools</dt><dd>Python · pandas · scikit-learn · LazyPredict · Colab</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#leak">The fake 100%</a>
+      <a href="#approach">Approach</a>
+      <a href="#results">Results</a>
+      <a href="#drivers">Churn drivers</a>
+      <a href="#recs">Recommendations</a>
+      <a href="#role">My role</a>
+    </nav>
+
+    <article class="prose">
+      <h2 id="leak">The fake 100%</h2>
+      <div class="callout warm">
+        <strong>A perfect score is a warning sign.</strong>
+        <p>Our first screen of about 30 models returned <strong>1.00 accuracy and 1.00 AUC</strong>. Instead of celebrating, we ran permutation importance and traced the result to the <code>Complain</code> column. It almost duplicates the outcome, possibly because complaints are logged after a customer has already decided to leave. We removed it and started again with honest numbers.</p>
+      </div>
+      <figure>
+        <img src="../assets/img/projects/bank_churn_02_leakage_detection.png" alt="Permutation importance showing the Complain feature dominating the model" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>Permutation importance revealed the leaking feature</figcaption>
+      </figure>
+
+      <h2 id="approach">Approach</h2>
+      <ul>
+        <li><strong>Cleaning:</strong> no nulls or outliers. We dropped identifier columns and Geography, and encoded Gender and Card Type.</li>
+        <li><strong>Imbalance:</strong> 7,962 customers stayed and 2,038 churned. We considered SMOTE and set aside a <strong>stratified 15% holdout</strong> used only for the final test.</li>
+        <li><strong>Model selection:</strong> we re-screened about 30 models with LazyPredict, then tuned the top three with GridSearchCV, optimizing for F1 to balance precision and recall on the minority class.</li>
+      </ul>
+
+      <h2 id="results">Results on the holdout set</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>Accuracy</th><th>AUC</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+          <tbody>
+            <tr class="best"><td>Random Forest (depth 20, 50 trees)</td><td>85.3%</td><td>82.4%</td><td>76.7%</td><td>39.9%</td><td>52.5%</td></tr>
+            <tr><td>AdaBoost (depth 5, lr 1, 50 estimators)</td><td>83.1%</td><td>82.5%</td><td>63.7%</td><td>40.2%</td><td>49.3%</td></tr>
+            <tr><td>KNN (k = 1, Manhattan)</td><td>69.9%</td><td>51.5%</td><td>23.1%</td><td>20.3%</td><td>21.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Random Forest had the best balance. When it flags a customer it's right about 3 times in 4, though it catches roughly 40% of churners. That's a usable shortlist for a retention team, not a complete net.</p>
+      <figure>
+        <img src="../assets/img/projects/bank_churn_03_random_forest_results.png" alt="Random Forest confusion matrix and metrics" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="drivers">What drives churn</h2>
+      <p>AdaBoost feature importance: <strong>Age (0.21)</strong>, then Estimated Salary (0.12), Loyalty Points (0.12), Number of Products (0.12), Balance (0.11) and Credit Score (0.11). Older customers were more likely to leave.</p>
+      <figure>
+        <img src="../assets/img/projects/bank_churn_04_feature_importance.png" alt="Feature importance bar chart led by age" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="recs">Recommendations: address, prevent, sustain</h2>
+      <ul>
+        <li><strong>Address:</strong> review the exit and complaint process, and confirm whether complaints are logged after customers have already decided to leave.</li>
+        <li><strong>Prevent:</strong> aim retention offers at the high-importance segments, and plan outreach with marketing.</li>
+        <li><strong>Sustain:</strong> retrain the model periodically. The success target is to retain 10% of customers who would otherwise churn.</li>
+      </ul>
+      <figure>
+        <img src="../assets/img/projects/bank_churn_05_recommendations.png" alt="Address, prevent, sustain recommendation framework" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="role">My role</h2>
+      <div class="role">
+        <ul>
+          <li>Member of a four-person team covering the full pipeline from data cleaning to business recommendations.</li>
+          <!-- TODO (Dennies): name what you did personally, e.g. cleaning, leakage investigation, tuning, recommendations, presentation. -->
+        </ul>
+      </div>
+      <p class="team">Team: Dennies Bicki Thomas, Tej Mistry, Anu Sri Valli Chinthapalli, Sophie Weinzinger. Data: "Bank Customer Churn," Radheshyam Kollipara (Kaggle, 2023).</p>
+
+      <div class="next-case">
+        <a href="lean-six-sigma-gentech.html">← Lean Six Sigma cycle time</a>
+        <a href="mailroom-computer-vision.html">Next: Mailroom computer vision →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>

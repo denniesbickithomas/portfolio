@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basecamp Dashboard | Dennies Bicki Thomas</title>
+  <meta name="description" content="MSBA capstone: an OAuth-secured Basecamp 4 API pipeline and Looker Studio dashboard giving a marketing agency one view of project status and team workload.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#work">← All projects</a>
+      <span class="eyebrow">MSBA Capstone · Real client engagement</span>
+      <h1>One view of every project and every person</h1>
+      <p class="lede">The marketing agency Off Madison Ave ran its work in Basecamp 4 but couldn't see overall project status or team workload in one place. Our five-person team turned that frustration into a scoped problem, built a secure data pipeline, and handed the client a dashboard they fully own.</p>
+      <dl class="facts">
+        <div><dt>Client</dt><dd>Off Madison Ave (marketing / PR agency)</dd></div>
+        <div><dt>When</dt><dd>Fall 2025 · final presentation Nov 25, 2025</dd></div>
+        <div><dt>Team</dt><dd>5 MSBA students · advisor David Jarvis</dd></div>
+        <div><dt>Stack</dt><dd>Basecamp 4 API · OAuth 2.0 · Apps Script · Google Sheets · Looker Studio</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#problem">Problem</a>
+      <a href="#approach">Approach</a>
+      <a href="#dashboard">The dashboard</a>
+      <a href="#results">Results</a>
+      <a href="#role">My role</a>
+      <a href="#limits">Limits &amp; next steps</a>
+    </nav>
+
+    <article class="prose">
+      <figure>
+        <img src="../assets/img/projects/capstone_07_research_poster.png" alt="Capstone research poster summarizing the problem, method and dashboard (client data redacted)" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>Team research poster. Client data is redacted.</figcaption>
+      </figure>
+
+      <h2 id="problem">The problem</h2>
+      <p>Basecamp is good for running individual projects, but it has no unified view of status across projects and no view of how work is spread across people. Managers clicked through separate project and person pages by hand. The result was duplicated work, patchy communication across platforms, and status tracking done manually.</p>
+      <div class="callout warm">
+        <strong>The hardest part was scoping, not coding.</strong>
+        <p>The original request was close to "fix our workflow." A large share of the project went into discovery with the agency's teams. From that we narrowed the request to one problem we could solve in a semester: <em>real-time visibility into project status and team bandwidth.</em></p>
+      </div>
+      <figure>
+        <img src="../assets/img/projects/capstone_03_problem.png" alt="Slide describing the client's visibility problem" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="approach">Approach</h2>
+      <h3>1. Security first, explained to a non-technical client</h3>
+      <p>We registered an OAuth 2.0 app with Basecamp (37signals Launchpad). On Sep 25, 2025 we ran an API explainer session for the client covering read-only access, scoped and expiring tokens, and HTTPS, so they understood what the integration could and couldn't touch before we built it.</p>
+      <h3>2. Extract and flatten the data (Google Apps Script)</h3>
+      <ul>
+        <li><strong>Token handling:</strong> tokens refresh automatically, and credentials are stored in Apps Script's PropertiesService rather than in the code.</li>
+        <li><strong>Mapping the API:</strong> a config object follows Basecamp's hierarchy of projects → to-do sets → to-do lists → to-dos.</li>
+        <li><strong>Import:</strong> a routine loops through every project, follows paginated endpoints, flattens the nested JSON, and writes clean rows to Google Sheets.</li>
+        <li><strong>Built for non-technical users:</strong> a custom Sheets menu lets staff refresh the data or check token status with one click.</li>
+      </ul>
+      <figure>
+        <img src="../assets/img/projects/capstone_04_methodology.png" alt="Methodology diagram: Basecamp API to Apps Script to Google Sheets to Looker Studio" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="dashboard">The dashboard</h2>
+      <p>A two-page Looker Studio report, refreshed weekly on a schedule, with a manual refresh option:</p>
+      <ul>
+        <li><strong>Project Status view:</strong> global filters for project and date range; scorecards for total, completed, pending and overdue tasks; a task-progress chart; a task table; and a <strong>workload tree map by assignee</strong>.</li>
+        <li><strong>People view:</strong> each person's share of the workload, their project and task counts, and per-person task tables.</li>
+      </ul>
+      <figure>
+        <img src="../assets/img/projects/capstone_05_dashboard_project_view.png" alt="Project Status page of the Looker Studio dashboard (redacted)" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>Project Status view (redacted)</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/img/projects/capstone_06_dashboard_people_view.png" alt="People view of the Looker Studio dashboard (redacted)" loading="lazy" onerror="hideMissing(this)">
+        <figcaption>People view (redacted)</figcaption>
+      </figure>
+
+      <h2 id="results">Results</h2>
+      <ul>
+        <li>Delivered a <strong>working dashboard that the client owns</strong>: the script, the Sheet and the report. It brings together information that previously meant jumping between many Basecamp views.</li>
+        <li>Replaced manual status gathering. Managers can now see workload imbalance and overdue work in one place, and we recommended using it in weekly or bi-weekly resourcing meetings.</li>
+        <li>The structured Sheet output means the agency can feed Basecamp data into other workflows and AI tools later.</li>
+      </ul>
+      <p class="muted">We didn't measure time saved, so I don't claim a number here.</p>
+
+      <h2 id="role">My role</h2>
+      <div class="role">
+        <ul>
+          <li>Opened the final client presentation: title, team introduction and agenda.</li>
+          <li>Co-authored the final report and the research poster.</li>
+          <!-- TODO (Dennies): add what you built or owned, e.g. Apps Script, Looker design, client meetings, documentation. -->
+        </ul>
+      </div>
+      <p class="team">Team: Anu Sri Valli Chinthapalli, Sophie Weinzinger, Tej Mistry, Dennies Bicki Thomas, Rishab Ravikumar. Faculty advisor: David Jarvis.</p>
+
+      <h2 id="limits">Limits &amp; next steps</h2>
+      <ul>
+        <li>The People view works best for small and mid-sized teams.</li>
+        <li>The dashboard can only show what Basecamp's API exposes. Client information, for example, wasn't available.</li>
+        <li>Possible next steps are adding Box or Excel sources, or moving to a native PM tool if headcount grows a lot.</li>
+      </ul>
+
+      <div class="next-case">
+        <a href="../index.html#work">← All projects</a>
+        <a href="lean-six-sigma-gentech.html">Next: Lean Six Sigma cycle time →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GreenFleet Decisions | Dennies Bicki Thomas</title>
+  <meta name="description" content="Decision analysis case: Bayesian decision trees and correlated Monte Carlo simulation for an EV maker's lithium investment and plant-capacity decisions.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#work">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#work">← All projects</a>
+      <span class="eyebrow">Decision analysis &amp; simulation · SCM 519</span>
+      <h1>Two big bets for an EV maker</h1>
+      <p class="lede">GreenFleet Motors faced two decisions under real uncertainty: whether to pay for a survey before buying a lithium site, and how large to build a new EV plant. We used decision trees and Monte Carlo simulation to give management a clear answer and a clear sense of the risk.</p>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Fall 2025</dd></div>
+        <div><dt>Team</dt><dd>5 MSBA students (Group 2)</dd></div>
+        <div><dt>Type</dt><dd>Business case</dd></div>
+        <div><dt>Tools</dt><dd>Excel · PrecisionTree · @RISK</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#lithium">Lithium site</a>
+      <a href="#capacity">Plant capacity</a>
+      <a href="#role">My role</a>
+    </nav>
+
+    <article class="prose">
+      <h2 id="lithium">Decision 1: buy the survey, invest now, or walk away?</h2>
+      <p>A $300K geological survey could tell GreenFleet whether a lithium site was Rich (40% prior, +$4M), Moderate (35%, $0) or Dry (25%, −$2.5M). We built a decision tree with Bayesian-revised probabilities to price what the survey would really be worth.</p>
+      <div class="results">
+        <div class="stat"><div class="num">$975K</div><div class="label">expected value of the best choice: invest now</div></div>
+        <div class="stat"><div class="num">$228K</div><div class="label">value of the survey's information (EVSI), below its $300K cost</div></div>
+        <div class="stat"><div class="num">$625K</div><div class="label">value of perfect information (EVPI), the most any survey could be worth</div></div>
+      </div>
+      <p><strong>Recommendation: invest now without the survey.</strong> A tornado sensitivity analysis showed that the probability the site is Rich drives the decision. If that probability falls below <strong>35%</strong>, the survey is worth reconsidering, which gives management a trigger to watch rather than a one-off answer.</p>
+      <figure>
+        <img src="../assets/img/projects/greenfleet_01_decision_tree.png" alt="Decision tree for the lithium-site survey decision" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+      <figure>
+        <img src="../assets/img/projects/greenfleet_02_value_of_information.png" alt="Value of sample and perfect information" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+      <figure>
+        <img src="../assets/img/projects/greenfleet_03_tornado_sensitivity.png" alt="Tornado chart showing probability of a rich site as the key driver" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="capacity">Decision 2: how big a plant?</h2>
+      <p>We ran a 5-year Monte Carlo simulation where demand is <strong>correlated across years</strong> (correlation = 0.4ⁿ for years n apart), so a strong year tends to be followed by another strong year.</p>
+      <div class="results">
+        <div class="stat"><div class="num">25,000</div><div class="label">units: recommended capacity</div></div>
+        <div class="stat"><div class="num">≈ $685M</div><div class="label">mean 5-year profit (median ≈ $914M)</div></div>
+        <div class="stat"><div class="num">≈ −$392M</div><div class="label">worst simulated case</div></div>
+      </div>
+      <p><strong>Recommendation: build for 25,000 units.</strong> Above that, the downside risk rises sharply, so we advised a hard cap of 30,000.</p>
+      <figure>
+        <img src="../assets/img/projects/greenfleet_04_monte_carlo_results.png" alt="Monte Carlo profit distributions by plant capacity" loading="lazy" onerror="hideMissing(this)">
+      </figure>
+
+      <h2 id="role">My role</h2>
+      <div class="role">
+        <ul>
+          <li>Presented the opening and the company and decision background, framing the two choices for the audience before the analysis.</li>
+        </ul>
+      </div>
+      <p class="team">Group 2: Tej Mistry, Sophie Weinzinger, Anu Sri Valli Chinthapalli, Dennies Bicki Thomas, Rishab Ravikumar.</p>
+
+      <div class="next-case">
+        <a href="mailroom-computer-vision.html">← Mailroom computer vision</a>
+        <a href="yelp-nlp.html">Next: Yelp review analytics →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>
