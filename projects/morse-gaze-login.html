@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Morse Gaze-Tracking Login | Dennies Bicki Thomas</title>
+  <meta name="description" content="A desktop login that replaces passwords with face recognition plus Morse code entered by blinks, gaze or mouse clicks. Built in Python with OpenCV and dlib.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#builds">Builds</a></li>
+      <li><a href="../index.html#work">Case studies</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#builds">← All builds</a>
+      <span class="eyebrow">Computer vision · Accessibility</span>
+      <h1>Morse code gaze-tracking login</h1>
+      <p class="lede">A desktop login with no password to type. The system first recognizes your face on the webcam, then you enter your code in Morse by blinking or looking in patterns. The decoded code is matched against your stored credentials. We built it to explore accessible, alternative ways to authenticate.</p>
+      <div class="btn-row" style="margin-bottom:1.6em">
+        <a class="btn btn-ghost" href="https://github.com/abhir271/morse-code-login" target="_blank" rel="noopener">Code on GitHub</a>
+      </div>
+      <dl class="facts">
+        <div><dt>Type</dt><dd>Team project</dd></div>
+        <div><dt>Platform</dt><dd>Desktop app · Python 3.7</dd></div>
+        <div><dt>Vision</dt><dd>OpenCV (LBPH face recognition) · dlib facial landmarks</dd></div>
+        <div><dt>Other</dt><dd>Tkinter &amp; PyQt5 · pandas · Telegram bot (telepot) · Pillow</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#structure">Code structure</a>
+      <a href="#privacy">Privacy by design</a>
+    </nav>
+
+    <article class="prose">
+      <h2 id="how">How it works</h2>
+      <ol>
+        <li><strong>Register:</strong> the app captures face samples from the webcam and trains a recognition model for the new user.</li>
+        <li><strong>Verify identity:</strong> at login, OpenCV's LBPH face recognizer checks the face against registered users before going further.</li>
+        <li><strong>Enter the code in Morse:</strong> dlib's facial landmark detection tracks the eyes, and blink or gaze patterns become dots and dashes.</li>
+        <li><strong>Decode and match:</strong> the Morse sequence is decoded and compared with the user's stored credentials.</li>
+        <li><strong>Notify:</strong> a Telegram bot sends a login notification or alert.</li>
+      </ol>
+
+      <h2 id="features">Features</h2>
+      <ul>
+        <li><strong>Face recognition login</strong> with OpenCV's LBPH recognizer.</li>
+        <li><strong>Gaze and blink Morse input</strong> using dlib's 68-point facial landmarks.</li>
+        <li><strong>Mouse-click Morse input</strong> as an alternative mode, using timed clicks instead of eye tracking.</li>
+        <li><strong>User registration</strong> that captures face samples and retrains the model.</li>
+        <li><strong>Telegram bot alerts</strong> for login events, including photo attachments.</li>
+        <li><strong>Desktop GUI</strong> in Tkinter for the registration and login flows.</li>
+      </ul>
+
+      <h2 id="structure">Code structure</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>Morse_login.py</code></td><td>Main entry point: login and register GUI</td></tr>
+            <tr><td><code>Register.py</code></td><td>User registration flow</td></tr>
+            <tr><td><code>login.py</code></td><td>Login flow logic</td></tr>
+            <tr><td><code>gaze.py</code></td><td>Gaze-tracking Morse input</td></tr>
+            <tr><td><code>mouse-clicks-morse.py</code></td><td>Mouse-click Morse input</td></tr>
+            <tr><td><code>morse_converter.py</code></td><td>Morse encoding and decoding</td></tr>
+            <tr><td><code>attachem.py</code>, <code>msg.py</code>, <code>sam.py</code></td><td>Telegram messaging and photo attachments</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="privacy">Privacy by design</h2>
+      <div class="callout">
+        <strong>No face data or secrets in the repo.</strong>
+        <p>Face samples, the trained model (<code>trainer.yml</code>) and user records are created locally when someone registers and are never committed. Bot tokens and other credentials live in a gitignored <code>config.py</code>.</p>
+      </div>
+
+
+      <div class="next-case">
+        <a href="olist-genai-pipeline.html">← E-commerce GenAI pipeline</a>
+        <a href="../index.html#work">Next: MSBA case studies →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>

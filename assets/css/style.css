@@ -320,3 +320,6 @@ figcaption { font-size: .86rem; color: var(--ink-3); margin-top: 8px; }
 .next-case { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 28px; margin-top: 48px; }
 .next-case a { text-decoration: none; font-weight: 600; }
 .team { font-size: .92rem; color: var(--ink-3); }
+
+/* skills: odd group count — let the last group span the row */
+.skills .skill-group:last-child:nth-child(odd) { grid-column: 1 / -1; }

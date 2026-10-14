@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Olist GenAI Analytics Pipeline | Dennies Bicki Thomas</title>
+  <meta name="description" content="End-to-end analytics on ~120K Olist e-commerce orders: a 9-table PostgreSQL schema, SQL business analysis, a Tableau dashboard and a RAG assistant built on the Claude API.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='28' font-weight='700' fill='white'%3EDT%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="../index.html">Dennies <span>Bicki</span> Thomas</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html#story">Story</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#builds">Builds</a></li>
+      <li><a href="../index.html#work">Case studies</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle dark mode">☾</button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="case-hero">
+    <div class="container">
+      <a class="back" href="../index.html#builds">← All builds</a>
+      <span class="eyebrow">Data pipeline · GenAI · RAG</span>
+      <h1>E-commerce analytics pipeline with a GenAI insights assistant</h1>
+      <p class="lede">I took the Olist Brazilian e-commerce dataset from raw CSVs to a published dashboard: schema design, cleaning, loading, SQL analysis and Tableau. Then I added a retrieval-augmented generation (RAG) assistant, so anyone can ask a business question in plain English and get an answer grounded in the data, without writing SQL.</p>
+      <div class="btn-row" style="margin-bottom:1.6em">
+        <a class="btn btn-primary" href="https://olist-e-commerce-analytics-pipeline-72aijejfwqy7xvoohtjjgp.streamlit.app/" target="_blank" rel="noopener">Open the live app</a>
+        <a class="btn btn-ghost" href="https://public.tableau.com/app/profile/abhishek.ravikumar8688/viz/OlistE-CommerceAnalytics_17865833504340/OlistE-CommerceAnalyticsDashboard" target="_blank" rel="noopener">Tableau dashboard</a>
+      </div>
+      <dl class="facts">
+        <div><dt>Type</dt><dd>Independent build</dd></div>
+        <div><dt>Data</dt><dd>Olist Brazilian E-Commerce (Kaggle) · ~120K orders</dd></div>
+        <div><dt>Pipeline</dt><dd>PostgreSQL · Python (pandas, SQLAlchemy) · SQL · Tableau Public</dd></div>
+        <div><dt>GenAI</dt><dd>Chroma · sentence-transformers · Claude API · Streamlit</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container case-body">
+    <nav class="toc" aria-label="On this page">
+      <a href="#questions">Business questions</a>
+      <a href="#pipeline">The pipeline</a>
+      <a href="#quality">Data quality</a>
+      <a href="#findings">Key findings</a>
+      <a href="#rag">GenAI assistant</a>
+      <a href="#validation">Validation</a>
+      <a href="#files">What's in the repo</a>
+    </nav>
+
+    <article class="prose">
+      <h2 id="questions">Business questions</h2>
+      <ol>
+        <li>Which product categories drive the most revenue?</li>
+        <li>Does delivery time affect customer review scores?</li>
+        <li>What is the repeat purchase rate?</li>
+        <li>How does seller performance vary across revenue and ratings?</li>
+      </ol>
+
+      <h2 id="pipeline">The pipeline</h2>
+      <ul>
+        <li><strong>Schema:</strong> a normalized PostgreSQL schema of 9 tables with primary keys, foreign keys and constraints.</li>
+        <li><strong>Cleaning and loading:</strong> a Python notebook (pandas, SQLAlchemy) that cleans, validates and loads ~120K real orders.</li>
+        <li><strong>Analysis:</strong> SQL with multi-table joins, aggregations and subqueries to answer each business question.</li>
+        <li><strong>Dashboard:</strong> query results exported to an interactive Tableau Public dashboard.</li>
+      </ul>
+
+      <h2 id="quality">Data quality process</h2>
+      <ul>
+        <li>Verified referential integrity across every foreign key before loading: <strong>zero orphaned records</strong>.</li>
+        <li>Found and resolved 2 product categories with no English translation in the source data.</li>
+      </ul>
+      <div class="callout warm">
+        <strong>The real data corrected two of my schema assumptions.</strong>
+        <p><code>customer_unique_id</code> is not unique: one customer can place several orders under the same identity. And <code>review_id</code> is not a standalone primary key, because Olist reuses review IDs across grouped orders, so the reviews table needed a composite key.</p>
+      </div>
+
+      <h2 id="findings">Key findings</h2>
+      <ul>
+        <li><strong>Health &amp; beauty</strong> and <strong>watches &amp; gifts</strong> are the top-revenue categories.</li>
+        <li>Delivery time has a clear relationship with review scores: orders with longer delivery windows get lower ratings.</li>
+        <li>The repeat purchase rate is low, about <strong>3%</strong>, which is typical of marketplace buying behavior.</li>
+        <li>Seller revenue and review quality vary independently. Some high-revenue sellers have below-average ratings, which shows where customer satisfaction needs attention.</li>
+      </ul>
+
+      <h2 id="rag">The GenAI insights assistant</h2>
+      <p>The assistant sits on top of the SQL layer and works in four steps:</p>
+      <ol>
+        <li>Key business metrics are precomputed in SQL and turned into plain-English summary chunks.</li>
+        <li>Those summaries are embedded locally with sentence-transformers (<code>all-MiniLM-L6-v2</code>) and stored in a Chroma vector database.</li>
+        <li>A user's question is embedded and matched against the most semantically similar summaries.</li>
+        <li>The retrieved summaries go to the Claude API as context. Claude writes an answer grounded in them, or says plainly that the data doesn't support an answer instead of guessing.</li>
+      </ol>
+      <p>The Streamlit app puts the Tableau dashboard and the chat interface side by side.</p>
+
+      <h2 id="validation">Validation</h2>
+      <p>I tested the assistant against a hand-curated set of business questions, some answerable from the data and some deliberately out of scope.</p>
+      <div class="callout">
+        <strong>Fixing a retrieval recall gap</strong>
+        <p>Retrieving only the top 2 most similar chunks missed some in-scope answers. Raising retrieval to the top 3 fixed it. The assistant now answers in-scope questions correctly and declines out-of-scope ones instead of hallucinating.</p>
+      </div>
+
+      <h2 id="files">What's in the repo</h2>
+      <h3>Analytics pipeline</h3>
+      <ul>
+        <li><code>schema.sql</code>: the full PostgreSQL schema (9 tables, keys and constraints)</li>
+        <li><code>business_questions.sql</code>: the queries behind the four business questions</li>
+        <li><code>Ecommerce_pipeline.ipynb</code>: cleaning, validation and loading</li>
+        <li><code>tableau exports/</code>: CSV exports used to build the dashboard</li>
+      </ul>
+      <h3>GenAI / RAG layer</h3>
+      <ul>
+        <li><code>s1_generate_summaries.py</code>: inspects the database schema and tables</li>
+        <li><code>s1b_generate_summaries.py</code>: generates the business summary chunks from PostgreSQL</li>
+        <li><code>summaries.json</code>: the precomputed summaries</li>
+        <li><code>app.py</code>: the combined Streamlit app (dashboard + RAG chat)</li>
+      </ul>
+
+      <p class="team">Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" target="_blank" rel="noopener">Olist Brazilian E-Commerce Public Dataset</a> (Kaggle).</p>
+
+      <div class="next-case">
+        <a href="../index.html#builds">← All builds</a>
+        <a href="morse-gaze-login.html">Next: Morse code gaze-tracking login →</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><span>© <span data-year>2026</span> Dennies Bicki Thomas</span><a href="../index.html#contact">Get in touch</a></div>
+</footer>
+</body>
+</html>
