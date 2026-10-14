@@ -37,13 +37,13 @@
       <a class="back" href="../index.html#builds">← All builds</a>
       <span class="eyebrow">Data pipeline · GenAI · RAG</span>
       <h1>E-commerce analytics pipeline with a GenAI insights assistant</h1>
-      <p class="lede">I took the Olist Brazilian e-commerce dataset from raw CSVs to a published dashboard: schema design, cleaning, loading, SQL analysis and Tableau. Then I added a retrieval-augmented generation (RAG) assistant, so anyone can ask a business question in plain English and get an answer grounded in the data, without writing SQL.</p>
+      <p class="lede">We took the Olist Brazilian e-commerce dataset from raw CSVs to a published dashboard: schema design, cleaning, loading, SQL analysis and Tableau. Then we added a retrieval-augmented generation (RAG) assistant, so anyone can ask a business question in plain English and get an answer grounded in the data, without writing SQL.</p>
       <div class="btn-row" style="margin-bottom:1.6em">
         <a class="btn btn-primary" href="https://olist-e-commerce-analytics-pipeline-72aijejfwqy7xvoohtjjgp.streamlit.app/" target="_blank" rel="noopener">Open the live app</a>
         <a class="btn btn-ghost" href="https://public.tableau.com/app/profile/abhishek.ravikumar8688/viz/OlistE-CommerceAnalytics_17865833504340/OlistE-CommerceAnalyticsDashboard" target="_blank" rel="noopener">Tableau dashboard</a>
       </div>
       <dl class="facts">
-        <div><dt>Type</dt><dd>Independent build</dd></div>
+        <div><dt>Team</dt><dd>Group project with Abhishek Ravikumar</dd></div>
         <div><dt>Data</dt><dd>Olist Brazilian E-Commerce (Kaggle) · ~120K orders</dd></div>
         <div><dt>Pipeline</dt><dd>PostgreSQL · Python (pandas, SQLAlchemy) · SQL · Tableau Public</dd></div>
         <div><dt>GenAI</dt><dd>Chroma · sentence-transformers · Claude API · Streamlit</dd></div>
@@ -85,7 +85,7 @@
         <li>Found and resolved 2 product categories with no English translation in the source data.</li>
       </ul>
       <div class="callout warm">
-        <strong>The real data corrected two of my schema assumptions.</strong>
+        <strong>The real data corrected two of our schema assumptions.</strong>
         <p><code>customer_unique_id</code> is not unique: one customer can place several orders under the same identity. And <code>review_id</code> is not a standalone primary key, because Olist reuses review IDs across grouped orders, so the reviews table needed a composite key.</p>
       </div>
 
@@ -108,7 +108,7 @@
       <p>The Streamlit app puts the Tableau dashboard and the chat interface side by side.</p>
 
       <h2 id="validation">Validation</h2>
-      <p>I tested the assistant against a hand-curated set of business questions, some answerable from the data and some deliberately out of scope.</p>
+      <p>We tested the assistant against a hand-curated set of business questions, some answerable from the data and some deliberately out of scope.</p>
       <div class="callout">
         <strong>Fixing a retrieval recall gap</strong>
         <p>Retrieving only the top 2 most similar chunks missed some in-scope answers. Raising retrieval to the top 3 fixed it. The assistant now answers in-scope questions correctly and declines out-of-scope ones instead of hallucinating.</p>
@@ -130,7 +130,7 @@
         <li><code>app.py</code>: the combined Streamlit app (dashboard + RAG chat)</li>
       </ul>
 
-      <p class="team">Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" target="_blank" rel="noopener">Olist Brazilian E-Commerce Public Dataset</a> (Kaggle).</p>
+      <p class="team">Built with Abhishek Ravikumar. We built the Tableau dashboard together, and it's published on Abhishek's Tableau Public profile. Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" target="_blank" rel="noopener">Olist Brazilian E-Commerce Public Dataset</a> (Kaggle).</p>
 
       <div class="next-case">
         <a href="../index.html#builds">← All builds</a>
